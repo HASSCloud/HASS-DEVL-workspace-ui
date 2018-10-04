@@ -632,7 +632,7 @@ export class ExplorerController extends React.Component {
                     </div>
                   </header>
                 ) }
-                
+
                 <ResultsList data={this.state.results} license={this.state.license} addDistToSelection={this.addDistToSelection} deleteDistFromSelection={this.deleteDistFromSelection} selectedDistributions={this.props.selectedDistributions} />
 
                 { this.state.hits > 0 && (
