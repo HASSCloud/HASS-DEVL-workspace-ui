@@ -624,20 +624,25 @@ export class ExplorerController extends React.Component {
             </div>
             <BlockUi tag="div" blocking={this.state.resultsLoading} loader={<Loader active type="ball-pulse" />}>
               <div className="results-list">
-                <header>
-                  <div className="pagination">
-                    <span className="pages">Page {this.state.page} / { Math.ceil(this.state.hits / this.state.perpage) }</span>
-                    { this.renderPageButtons() }
-                  </div>
-                </header>
+                { this.state.hits > 0 && (
+                  <header>
+                    <div className="pagination">
+                      <span className="pages">Page {this.state.page} / { Math.ceil(this.state.hits / this.state.perpage) }</span>
+                      { this.renderPageButtons() }
+                    </div>
+                  </header>
+                ) }
+                
                 <ResultsList data={this.state.results} license={this.state.license} addDistToSelection={this.addDistToSelection} deleteDistFromSelection={this.deleteDistFromSelection} selectedDistributions={this.props.selectedDistributions} />
 
-                <footer>
-                  <div className="pagination">
-                    <span className="pages">Page {this.state.page} / { Math.ceil(this.state.hits / this.state.perpage) }</span>
-                    { this.renderPageButtons() }
-                  </div>
-                </footer>
+                { this.state.hits > 0 && (
+                  <footer>
+                    <div className="pagination">
+                      <span className="pages">Page {this.state.page} / { Math.ceil(this.state.hits / this.state.perpage) }</span>
+                      { this.renderPageButtons() }
+                    </div>
+                  </footer>
+                ) }
               </div>
             </BlockUi>
           </Col>
