@@ -200,11 +200,11 @@ header#header {
 
 	.navbar {
 		align-items:initial;
-		height:100px;
+		height: 70px;
 		padding-left:0;
 		padding-right:0;
 		button.navbar-toggler {
-		    margin-top: 1rem;
+		    margin: 0;
 		    height: 3rem;
 		}
 		.navbar-toggler-icon {
@@ -212,9 +212,10 @@ header#header {
 		    height:1.5rem;
 		}
 		.navbar-toggler-icon:before {
-			content: "\f0c9";  /* this is your text. You can also use UTF-8 character codes as I do here */
-		    font-family: FontAwesome;
-		    color:$primary-color;
+			content: "\f0c9";
+		    font-family: Font Awesome\ 5 Free;
+			color: $primary-color;
+			font-weight: 900;
 		}
 		.show.navbar-collapse {
 			background: white;
@@ -241,11 +242,14 @@ header#header {
 		.navbar-brand {
 			-ms-flex-item-align: center;
 			align-self: center;
+			
+			padding: 0;
+			margin: 0;
 
 		    img {
 				vertical-align: top;
-				width: 150px;
-				height: 51px;
+				width: 135px;
+				height: 46px;
 		    }
 		}
 		
@@ -266,7 +270,7 @@ header#header {
 
 		.nav-item {
 			a {
-				padding: 0em 1em;
+				padding: 0em 1.3em;
 				font-size: 1em;
 			}
 			.dropdown-item {
