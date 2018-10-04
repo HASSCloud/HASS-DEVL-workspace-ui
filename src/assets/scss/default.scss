@@ -7,9 +7,9 @@ $body-color: rgb(60, 72, 88);
 $footer-bg-color: #323437;
 $body-bg-color: $footer-bg-color;
 $main-bg-color: #fff;
-$primary-color: rgb(93, 150, 185);
+$primary-color: rgb(216, 114, 146);
 $secondary-color: rgb(242, 161, 107);
-$tertiary-color: rgb(216, 114, 146);
+$tertiary-color: rgb(93, 150, 185);
 $danger-color:#e17055;
 $light-gray: #808080;
 $misc-border: #E2E2E2;
@@ -89,10 +89,19 @@ label {
 		}
 	}
 
+	&.btn-tertiary {
+		background-color: $tertiary-color;
+		border-color: $tertiary-color;
+		color: #fff;
+
+		&:hover {
+			background-color: darken( $tertiary-color, 10% );
+		}
+	}
 
 	&.btn-danger {
 	    background-color: $danger-color;
-	    border-color: $danger-color;
+		border-color: $danger-color;
 	    &:hover {
 			background-color: darken( $danger-color, 15% );
 		}
@@ -162,10 +171,10 @@ img.card-logo {
 	}
 }
 a {
-  color:$tertiary-color;
+  color: $primary-color;
 
   &:hover{
-  	color: darken($tertiary-color, 20%);
+  	color: darken($primary-color, 20%);
   }
 }
 input, textarea, select {
@@ -254,10 +263,10 @@ header#header {
 		}
 		
 		a {
-			color:$body-color;
+			color: $body-color;
 
 			&:hover, &.active {
-				color: $tertiary-color;
+				color: $primary-color;
 				text-decoration: none;
 			}
 		}
@@ -804,14 +813,23 @@ footer#footer {
 	    margin-bottom:1.5rem;
 	}
 	ul {
-	    list-style-type: none;
-	    padding-left:0;
-		padding-right:1em;
-		margin-bottom: 1.5rem;
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
 	}
 	li {
-	    line-height: 1.2em;
-	    margin-bottom: .6em;
+		line-height: 1.2em;
+		display: inline-block;
+
+		a {
+			color: #fff;
+			opacity: 0.86;
+			font-size: 0.75em;
+			font-weight: bolder;
+			display: inline-block;
+			padding: 15px;
+			text-transform: uppercase;
+		}
 	}
 }
 

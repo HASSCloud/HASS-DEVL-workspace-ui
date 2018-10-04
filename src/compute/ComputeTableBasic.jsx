@@ -105,7 +105,7 @@ class ComputeTableBasic extends React.Component {
               // Only render buttons if not in the process of spinning up or down
               !server.pending && (
                 <>
-                  <a className="btn btn-primary btn-sm" href={`${huburl}${server.url}`} target="_blank" rel="noopener noreferrer">Open</a>
+                  <a className="btn btn-tertiary btn-sm" href={`${huburl}${server.url}`} target="_blank" rel="noopener noreferrer">Open</a>
                   {' '}
                   <a className="btn btn-danger btn-sm" href="#" onClick={(e) => { this.terminateServer(username); e.preventDefault(); }}>Terminate</a>
                 </>
