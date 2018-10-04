@@ -239,12 +239,13 @@ header#header {
 		}
 
 		.navbar-brand {
-			width: 192px;
-		    height: 42px;
-		    padding-top:0;
-		    margin-top: 1.3rem;
+			-ms-flex-item-align: center;
+			align-self: center;
+
 		    img {
-		    	vertical-align: top;
+				vertical-align: top;
+				width: 150px;
+				height: 51px;
 		    }
 		}
 		

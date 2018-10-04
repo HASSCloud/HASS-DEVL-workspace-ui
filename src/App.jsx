@@ -14,7 +14,7 @@ import Dashboard from './Dashboard';
 import ExplorerController from './ExplorerController';
 import SnippetsController from './SnippetsController';
 import { getUser, getAuthenticated } from './reducers';
-import Logo from './assets/images/logo.svg';
+import Logo from './assets/images/logo.png';
 import Footer from './Footer';
 import Meta from './Meta';
 import ToolsController from './ToolsController';
