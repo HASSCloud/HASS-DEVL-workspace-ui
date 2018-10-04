@@ -108,7 +108,7 @@ class App extends React.Component {
           <Route
             path="/workspace"
             render={() => ([
-              <span key="projects-text" className="logo-text"><h1>Workspace</h1></span>,
+              // <span key="projects-text" className="logo-text"><h1>Workspace</h1></span>,
               <Meta key="projects-meta" pagetitle="Workspace" pagedesc="Tinker Workspace" />,
             ])}
           />
@@ -116,7 +116,7 @@ class App extends React.Component {
             exact
             path="/explorer"
             render={() => ([
-              <span key="explorer-text" className="logo-text"><h1>Explorer</h1></span>,
+              // <span key="explorer-text" className="logo-text"><h1>Explorer</h1></span>,
               <Meta key="explorer-meta" pagetitle="Explorer" pagedesc="Tinker Explorer" />,
             ])}
           />
@@ -124,7 +124,7 @@ class App extends React.Component {
             exact
             path="/tools"
             render={() => ([
-              <span key="tools-text" className="logo-text"><h1>Tools</h1></span>,
+              // <span key="tools-text" className="logo-text"><h1>Tools</h1></span>,
               <Meta key="tools-meta" pagetitle="Tools" pagedesc="Tinker Tools" />,
             ])}
           />
