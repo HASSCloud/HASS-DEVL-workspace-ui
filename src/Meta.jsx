@@ -15,7 +15,7 @@ export default class Meta extends React.PureComponent {
     const pageMeta = (
       <Helmet>
         <meta charSet="utf-8" />
-        <title>ecocloud {pagetitle}</title>
+        <title>Tinker {pagetitle}</title>
         <meta name="description" content={pagedesc} />
       </Helmet>
     );

@@ -78,9 +78,9 @@ class App extends React.Component {
         <NavItem>
           <NavLink exact to="/tools">Tools</NavLink>
         </NavItem>
-        <NavItem>
-          <ExtNavLink target="_blank" href="http://support.ecocloud.org.au/support/solutions">Support</ExtNavLink>
-        </NavItem>
+        {/* <NavItem>
+          <ExtNavLink target="_blank" href="#">Support</ExtNavLink>
+        </NavItem> */}
         <UncontrolledDropdown nav inNavbar>
           <DropdownToggle nav>
             {user.name} <i className="fa fa-user-circle" />
@@ -97,19 +97,19 @@ class App extends React.Component {
     const MainNavbar = () => (
       <Navbar expand="lg">
         <NavbarBrand href="/">
-          <img src={Logo} alt="ecocloud Logo" />
+          <img src={Logo} alt="Tinker Logo" />
           <Route
             exact
             path="/"
             render={() => (
-              <Meta pagetitle="Dashboard" pagedesc="ecocloud Dashboard" />
+              <Meta pagetitle="Dashboard" pagedesc="Tinker Dashboard" />
             )}
           />
           <Route
             path="/workspace"
             render={() => ([
               <span key="projects-text" className="logo-text"><h1>Workspace</h1></span>,
-              <Meta key="projects-meta" pagetitle="Workspace" pagedesc="ecocloud Workspace" />,
+              <Meta key="projects-meta" pagetitle="Workspace" pagedesc="Tinker Workspace" />,
             ])}
           />
           <Route
@@ -117,7 +117,7 @@ class App extends React.Component {
             path="/explorer"
             render={() => ([
               <span key="explorer-text" className="logo-text"><h1>Explorer</h1></span>,
-              <Meta key="explorer-meta" pagetitle="Explorer" pagedesc="ecocloud Explorer" />,
+              <Meta key="explorer-meta" pagetitle="Explorer" pagedesc="Tinker Explorer" />,
             ])}
           />
           <Route
@@ -125,7 +125,7 @@ class App extends React.Component {
             path="/tools"
             render={() => ([
               <span key="tools-text" className="logo-text"><h1>Tools</h1></span>,
-              <Meta key="tools-meta" pagetitle="Tools" pagedesc="ecocloud Tools" />,
+              <Meta key="tools-meta" pagetitle="Tools" pagedesc="Tinker Tools" />,
             ])}
           />
         </NavbarBrand>

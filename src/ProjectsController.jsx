@@ -228,7 +228,7 @@ class ProjectsController extends React.Component {
             </div>
             <Row>
               <Col className="footerCallToAction">
-                <p>Need additional datasets? Find them in <Link to="/explorer" title="Find datasets in ecocloud Explorer"><strong><em>Explorer</em></strong></Link></p>
+                <p>Need additional datasets? Find them in <Link to="/explorer" title="Find datasets in Explorer">Explorer</Link></p>
               </Col>
             </Row>
           </ReduxBlockUi>

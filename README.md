@@ -1,4 +1,4 @@
-# ecocloud Workspace UI
+# Tinker Workspace UI
 
 **Requirements**
  - Node v8.11.1 (not currently compatible with Node >10)

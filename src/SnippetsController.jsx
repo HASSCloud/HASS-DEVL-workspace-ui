@@ -62,7 +62,7 @@ function renderNoSnippets() {
     <div className="no-snippets">
       <Alert color="light" fade={false}>
         <h4 className="alert-heading">No snippets selected</h4>
-        <p className="mb-0">Start by selecting datasets from the <em><Link to="/explorer">Explorer</Link></em></p>
+        <p className="mb-0">Start by selecting datasets from the<Link to="/explorer">Explorer</Link></p>
       </Alert>
     </div>
   );
@@ -120,7 +120,7 @@ export class SnippetsController extends React.Component {
           <Col xs="9">
             <div className="float-right">
               { /* <a className="btn btn-primary btn-sm"> Download All Snippets &nbsp; <FontAwesomeIcon icon={faCaretDown} /> </a> &nbsp; */ }
-              <a className="btn btn-secondary btn-sm" href={`${huburl}/hub/home`} target="_blank" title="Launch a notebook in ecocloud Compute" rel="noopener noreferrer"><FontAwesomeIcon icon={faServer} /> Launch Notebook</a>
+              <a className="btn btn-secondary btn-sm" href={`${huburl}/hub/home`} target="_blank" title="Launch a notebook in Tinker Compute" rel="noopener noreferrer"><FontAwesomeIcon icon={faServer} /> Launch Notebook</a>
             </div>
           </Col>
         </Row>

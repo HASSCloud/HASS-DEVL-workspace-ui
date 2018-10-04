@@ -7,16 +7,13 @@ import {
 } from 'reactstrap';
 import ReduxBlockUi from 'react-block-ui/redux';
 import { Loader } from 'react-loaders';
-import axios from 'axios';
 import * as actions from './projects/actions';
 import * as computeActions from './compute/actions';
 import {
   getUser, getAuthenticated, getStats, getServers,
 } from './reducers';
 import { ComputeTableBasic } from './compute';
-import { formatDate, bytesToSize } from './utils';
-
-const FeedMe = require('feedme');
+import { bytesToSize } from './utils';
 
 function mapStateToProps(state) {
   return {
@@ -43,14 +40,10 @@ export class Dashboard extends React.Component {
   }
 
   state = {
-    feed: ['No new notifications.'],
-    feedCancellationSource: undefined,
   }
 
   componentWillMount() {
     const { user } = this.props;
-
-    this.getFeed();
 
     // Start polling for JupyterHub server information
     this.props.dispatch(computeActions.serversListStart(user.sub));
@@ -63,56 +56,6 @@ export class Dashboard extends React.Component {
   componentWillUnmount() {
     // Stop polling for JupyterHub server information
     this.props.dispatch(computeActions.serversListStop());
-
-    // Cancel outstanding feed fetch
-    const { feedCancellationSource } = this.state;
-
-    if (feedCancellationSource) {
-      feedCancellationSource.cancel();
-    }
-  }
-
-  getFeed = () => {
-    // We keep track of the cancellation token in the state so that this request
-    // can be cancelled when the component is unmounted, especially when a
-    // quick unmount happens due to something like the sign in redirect
-    const feedCancellationSource = axios.CancelToken.source();
-
-    this.setState({
-      feedCancellationSource,
-    });
-
-    axios.get('https://www.ecocloud.org.au/category/notifications/feed/', {
-      cancelToken: feedCancellationSource.token,
-    })
-      .then(res => res.data)
-      .then((body) => {
-        const parser = new FeedMe(false);
-        const feed = [];
-        // register all event handlers before we push data into the parser
-        parser.on('item', (item) => {
-          // need to format date string
-          let desc = new DOMParser().parseFromString(item.description, 'text/html');
-          desc = desc.documentElement.textContent.substring(0, 80);
-          const date = formatDate(item.pubdate);
-          const feedItem = (
-            <li key={item.link}>
-              <p><strong>{date}</strong></p>
-              <p>{item.title}</p>
-              <p><span>{ desc }</span> <a href={item.link} target="_blank" rel="noopener noreferrer">... Read more</a></p>
-            </li>
-          );
-          feed.push(feedItem);
-        });
-        parser.on('end', () => {
-          this.setState({ feed });
-        });
-        // write is a blocking call
-        parser.write(body);
-        // trigger end event handler ....
-        // could just do setState here as well
-        parser.end();
-      });
   }
 
   render() {
@@ -146,14 +89,14 @@ export class Dashboard extends React.Component {
             }
           </Col>
         </Row>
-        <Row>
+        {/* <Row>
           <Col>
-            <p>Welcome to your <em>ecocloud <strong>Platform</strong></em>. This is your Dashboard where you can access and manage your running services.</p>
-            <p>Need help? Visit our <a href="http://support.ecocloud.org.au/support/solutions" target="_blank" rel="noopener noreferrer">support site</a>, or <a href="https://ecocloud.org.au/contact/" target="_blank" rel="noopener noreferrer">contact our support team</a>.</p>
+            <p>Welcome to Tinker. This is your Dashboard where you can access and manage your running services.</p>
+            <p>Need help? Visit our <a href="#" target="_blank" rel="noopener noreferrer">support site</a>, or <a href="#" target="_blank" rel="noopener noreferrer">contact our support team</a>.</p>
           </Col>
-        </Row>
+        </Row> */}
         <Row>
-          <Col sm={{ size: 9 }}>
+          <Col sm={{ size: 12 }}>
             <Row>
               <Col sm="12">
                 <h2>Servers</h2>
@@ -176,27 +119,8 @@ export class Dashboard extends React.Component {
             <Row>
               <Col sm="12">
                 <h2>Find Datasets</h2>
-                <p>Find datasets from hundreds of publishers through our <Link to="/explorer"><em>ecocloud <strong>Explorer</strong></em></Link> page.</p>
+                <p>Find datasets from hundreds of publishers through the <Link to="/explorer">Explorer</Link> page.</p>
               </Col>
-            </Row>
-          </Col>
-          <Col sm={{ size: 3 }}>
-            <Row>
-              <h2>Getting Started</h2>
-              <div className="dash-activity">
-                <ul>
-                  <li><p>See our <a href="http://support.ecocloud.org.au/support/solutions/articles/6000200387-compute-overview" target="_blank" rel="noopener noreferrer">guide on using Tools</a></p></li>
-                  <li><p>See our <a href="http://support.ecocloud.org.au/support/solutions/articles/6000200390-using-rstudio" target="_blank" rel="noopener noreferrer">guide on using RStudio</a></p></li>
-                  <li><p>See our <a href="http://support.ecocloud.org.au/support/solutions/articles/6000200389-using-jupyter-notebooks" target="_blank" rel="noopener noreferrer">guide on Jupyter Notebooks</a></p></li>
-                  <li><p>See our <a href="http://support.ecocloud.org.au/support/solutions/articles/6000200678-code-snippets" target="_blank" rel="noopener noreferrer">guide on using Snippets for data</a></p></li>
-                </ul>
-              </div>
-            </Row>
-            <Row>
-              <h2>Notifications</h2>
-              <div className="dash-activity">
-                <ul>{ this.state.feed }</ul>
-              </div>
             </Row>
           </Col>
         </Row>
