@@ -162,10 +162,10 @@ img.card-logo {
 	}
 }
 a {
-  color:$primary-color;
+  color:$tertiary-color;
 
   &:hover{
-  	color: darken($primary-color, 20%);
+  	color: darken($tertiary-color, 20%);
   }
 }
 input, textarea, select {
