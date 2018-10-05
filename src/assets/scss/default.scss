@@ -9,7 +9,7 @@ $body-bg-color: $footer-bg-color;
 $main-bg-color: #fff;
 $primary-color: rgb(216, 114, 146);
 $secondary-color: rgb(242, 161, 107);
-$tertiary-color: rgb(93, 150, 185);
+$tertiary-color: rgb(129, 173, 159);
 $danger-color:#e17055;
 $light-gray: #808080;
 $misc-border: #E2E2E2;
@@ -815,7 +815,7 @@ footer#footer {
 	ul {
 		list-style-type: none;
 		padding: 0;
-		margin: 0;
+		margin: 0 -15px;
 	}
 	li {
 		line-height: 1.2em;

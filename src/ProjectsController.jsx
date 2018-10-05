@@ -184,7 +184,7 @@ class ProjectsController extends React.Component {
                       <InputGroup key="folder">
                         <Input type="text" value={newFolder} onChange={this.changeNewFolder} required />
                         <InputGroupAddon addonType="append">
-                          <Button color="primary" onClick={this.addFolder}><FontAwesomeIcon icon={faCheck} /> Create</Button>
+                          <Button color="tertiary" onClick={this.addFolder}><FontAwesomeIcon icon={faCheck} /> Create</Button>
                           <Button color="danger" onClick={this.cancelAddFolder}><FontAwesomeIcon icon={faTimes} /> Cancel</Button>
                         </InputGroupAddon>
                       </InputGroup>
@@ -200,7 +200,7 @@ class ProjectsController extends React.Component {
                         <Label for="uploads" className="btn btn-secondary">Choose File</Label>
                         <Input hidden id="uploads" type="file" onChange={this.changeNewFile} required />
                         <InputGroupAddon addonType="append">
-                          <Button color="primary" onClick={this.addFile}><FontAwesomeIcon icon={faCheck} /> Upload</Button>
+                          <Button color="tertiary" onClick={this.addFile}><FontAwesomeIcon icon={faCheck} /> Upload</Button>
                           <Button color="danger" onClick={this.cancelAddFile}><FontAwesomeIcon icon={faTimes} /> Cancel</Button>
                         </InputGroupAddon>
                       </InputGroup>
