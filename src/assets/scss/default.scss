@@ -205,20 +205,20 @@ header#header {
 	box-shadow: 0 1px 10px -6px rgba(0,0,0,0.42),0 1px 10px 0 rgba(0,0,0,0.12),0 4px 5px -2px rgba(0,0,0,0.1);
 	text-transform: uppercase;
 
-	font-size: 0.75em;
+	font-size: 0.75rem;
 
 	.navbar {
-		align-items:initial;
+		align-items: stretch;
 		height: 70px;
-		padding-left:0;
-		padding-right:0;
+		padding: 12px 0;
+
 		button.navbar-toggler {
-		    margin: 0;
-		    height: 3rem;
+			margin: 0;
+			padding: 0;
 		}
 		.navbar-toggler-icon {
-		    position:relative;
-		    height:1.5rem;
+			height: 0;
+			line-height: 0;
 		}
 		.navbar-toggler-icon:before {
 			content: "\f0c9";
@@ -248,10 +248,7 @@ header#header {
 		    }
 		}
 
-		.navbar-brand {
-			-ms-flex-item-align: center;
-			align-self: center;
-			
+		.navbar-brand {			
 			padding: 0;
 			margin: 0;
 
@@ -824,7 +821,7 @@ footer#footer {
 		a {
 			color: #fff;
 			opacity: 0.86;
-			font-size: 0.75em;
+			font-size: 0.75rem;
 			font-weight: bolder;
 			display: inline-block;
 			padding: 15px;
