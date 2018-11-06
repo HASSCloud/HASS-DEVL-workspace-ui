@@ -12,7 +12,6 @@ import { Map, Set } from 'immutable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
-import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons/faQuestionCircle';
 import { SearchFacet, ResultsList } from './explorer';
 import { getUser, getAuthenticated, getSelectedDistributions } from './reducers';
 import * as snippetActions from './snippets/actions';
@@ -612,7 +611,6 @@ export class ExplorerController extends React.Component {
           <Col lg="9" md="12">
             <div className="selected">
               <h4>Datasets Selected: { this.props.selectedDistributions.size }</h4>
-              {/* <a href="#" target="_blank" rel="noopener noreferrer" className="help-link"><FontAwesomeIcon icon={faQuestionCircle} /> How Do I Use This Selection?</a> */}
               <Link to="/snippets" params={{ selectedDistributions: this.state.selectedDistributions }} className="btn btn-primary float-right">View Snippets </Link>
               <ul className="selected-datasets">
                 {
@@ -633,7 +631,13 @@ export class ExplorerController extends React.Component {
                   </header>
                 ) }
 
-                <ResultsList data={this.state.results} license={this.state.license} addDistToSelection={this.addDistToSelection} deleteDistFromSelection={this.deleteDistFromSelection} selectedDistributions={this.props.selectedDistributions} />
+                <ResultsList
+                  data={this.state.results}
+                  license={this.state.license}
+                  addDistToSelection={this.addDistToSelection}
+                  deleteDistFromSelection={this.deleteDistFromSelection}
+                  selectedDistributions={this.props.selectedDistributions}
+                />
 
                 { this.state.hits > 0 && (
                   <footer>

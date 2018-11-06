@@ -6,7 +6,6 @@ import { Route, NavLink, withRouter } from 'react-router-dom';
 import {
   Container, Navbar, NavbarBrand, NavbarToggler, Nav, NavItem, Collapse,
   UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem,
-  NavLink as ExtNavLink,
 } from 'reactstrap';
 import './App.css';
 import ProjectsController from './ProjectsController';

@@ -3,11 +3,6 @@ import {
   Container,
 } from 'reactstrap';
 
-const ToolsController = () => {
-  return (
-    <Container>
-    </Container>
-  );
-};
+const ToolsController = () => <Container />;
 
 export default ToolsController;

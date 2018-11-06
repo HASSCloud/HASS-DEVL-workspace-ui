@@ -89,12 +89,6 @@ export class Dashboard extends React.Component {
             }
           </Col>
         </Row>
-        {/* <Row>
-          <Col>
-            <p>Welcome to Tinker. This is your Dashboard where you can access and manage your running services.</p>
-            <p>Need help? Visit our <a href="#" target="_blank" rel="noopener noreferrer">support site</a>, or <a href="#" target="_blank" rel="noopener noreferrer">contact our support team</a>.</p>
-          </Col>
-        </Row> */}
         <Row>
           <Col sm={{ size: 12 }}>
             <Row>

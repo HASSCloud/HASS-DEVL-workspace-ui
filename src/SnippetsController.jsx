@@ -119,7 +119,6 @@ export class SnippetsController extends React.Component {
           </Col>
           <Col xs="9">
             <div className="float-right">
-              { /* <a className="btn btn-primary btn-sm"> Download All Snippets &nbsp; <FontAwesomeIcon icon={faCaretDown} /> </a> &nbsp; */ }
               <a className="btn btn-secondary btn-sm" href={`${huburl}/hub/home`} target="_blank" title="Launch a notebook in Tinker Compute" rel="noopener noreferrer"><FontAwesomeIcon icon={faServer} /> Launch Notebook</a>
             </div>
           </Col>
