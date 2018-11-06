@@ -16,7 +16,6 @@ import { getUser, getAuthenticated } from './reducers';
 import Logo from './assets/images/logo.png';
 import Footer from './Footer';
 import Meta from './Meta';
-import ToolsController from './ToolsController';
 import * as actions from './actions';
 import './assets/scss/default.scss';
 
@@ -74,12 +73,6 @@ class App extends React.Component {
         <NavItem>
           <NavLink exact to="/explorer">Explorer</NavLink>
         </NavItem>
-        <NavItem>
-          <NavLink exact to="/tools">Tools</NavLink>
-        </NavItem>
-        {/* <NavItem>
-          <ExtNavLink target="_blank" href="#">Support</ExtNavLink>
-        </NavItem> */}
         <UncontrolledDropdown nav inNavbar>
           <DropdownToggle nav>
             {user.name} <i className="fa fa-user-circle" />
@@ -119,14 +112,6 @@ class App extends React.Component {
               <Meta key="explorer-meta" pagetitle="Explorer" pagedesc="Tinker Explorer" />,
             ])}
           />
-          <Route
-            exact
-            path="/tools"
-            render={() => ([
-              // <span key="tools-text" className="logo-text"><h1>Tools</h1></span>,
-              <Meta key="tools-meta" pagetitle="Tools" pagedesc="Tinker Tools" />,
-            ])}
-          />
         </NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
@@ -155,7 +140,6 @@ class App extends React.Component {
             <Route key="Workspace" exact path="/workspace" component={ProjectsController} />,
             <Route key="Explorer" path="/explorer" component={ExplorerController} />,
             <Route key="Snippets" path="/snippets" component={SnippetsController} />,
-            <Route key="Tools" exact path="/tools" component={ToolsController} />,
           ]) : (
             <Container>
               <h1>You are not signed in</h1>
