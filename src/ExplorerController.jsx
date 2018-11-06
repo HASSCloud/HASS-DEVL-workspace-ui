@@ -16,46 +16,6 @@ import { SearchFacet, ResultsList } from './explorer';
 import { getUser, getAuthenticated, getSelectedDistributions } from './reducers';
 import * as snippetActions from './snippets/actions';
 
-// https://lowrey.me/parsing-a-csv-file-in-es6-javascript/
-class Csv {
-  static parseLine(text) {
-    const regex = /(?!\s*$)\s*(?:'([^'\\]*(?:\\[\S\s][^'\\]*)*)'|"([^"\\]*(?:\\[\S\s][^"\\]*)*)"|([^,'"\s\\]*(?:\s+[^,'"\s\\]+)*))\s*(?:,|$)/g;
-    const arr = [];
-    text.replace(regex, (m0, m1, m2, m3) => {
-      if (m1 !== undefined) {
-        arr.push(m1.replace(/\\'/g, "'"));
-      } else if (m2 !== undefined) {
-        arr.push(m2.replace(/\\"/g, '"'));
-      } else if (m3 !== undefined) {
-        arr.push(m3);
-      }
-      return '';
-    });
-    if (/,\s*$/.test(text)) {
-      arr.push('');
-    }
-    return arr;
-  }
-
-  static zipObject(props, values) {
-    return props.reduce((prev, prop, i) => {
-      prev[prop] = values[i]; // eslint-disable-line no-param-reassign
-      return prev;
-    }, {});
-  }
-
-  static parse(csv) {
-    const [properties, ...data] = csv.split('\n').map(Csv.parseLine);
-    return data.map(line => this.zipObject(properties, line));
-  }
-
-  static serialize(obj) {
-    const fields = Object.keys(obj[0]);
-    const csv = obj.map(row => fields.map(fieldName => JSON.stringify(row[fieldName] || '')));
-    return [fields, ...csv].join('\n');
-  }
-}
-
 function mapStateToProps(state) {
   return {
     user: getUser(state),
@@ -147,12 +107,11 @@ function generateBaselineQueryObject(pageSize, pageIndex, sort) {
     },
     query: {
       bool: {
+        /** @type {any[]} */
         must: [
-          {
-            terms: {
-              // 'publisher.name.keyword': publisherNames,
-            },
-          },
+          // This blank object here is to maintain the index order that exists
+          // in the code at the moment; this has been noted to be removed
+          {},
           {
             nested: {
               path: 'distributions',
@@ -205,14 +164,6 @@ export class ExplorerController extends React.Component {
     this.handleKeywordChange = this.handleKeywordChange.bind(this);
     this.handlePerPageChange = this.handlePerPageChange.bind(this);
     this.handleSortChange = this.handleSortChange.bind(this);
-
-    /**
-     * "Restricted" set of publishers which are determined to contain
-     * environmental data; this is delivered from our own CSV data source
-     *
-     * @type {{ id: string, name: string }[]}
-     */
-    this.restrictedPubs = [];
 
     this.state = {
       /**
@@ -270,8 +221,9 @@ export class ExplorerController extends React.Component {
 
   componentDidMount() {
     console.warn('Explorer: work in progress.');
-    this.loadPublishers();
-    this.loadLicense();
+
+    this.loadLicense()
+      .then(() => this.getResults());
   }
 
   getResults() {
@@ -359,12 +311,8 @@ export class ExplorerController extends React.Component {
     }
 
     if (selectedPublishers.size === 0) {
-      // Default publishers = full set of the "restricted" publishers
-      query.query.bool.must[0] = {
-        terms: {
-          'publisher.name.keyword': this.restrictedPubs.map(pub => pub.name),
-        },
-      };
+      // Don't filter by publisher name keyword
+      query.query.bool.must[0] = {};
     } else {
       query.query.bool.must[0] = {
         terms: {
@@ -452,20 +400,6 @@ export class ExplorerController extends React.Component {
     };
   }
 
-  loadPublishers() {
-    axios.get('https://raw.githubusercontent.com/CSIRO-enviro-informatics/workspace-ui/master/config/knv2-publishers.csv')
-      .then((res) => {
-        const rawPublishers = Csv.parse(res.data);
-
-        // Capture only those which are flagged as being environmental data
-        this.restrictedPubs = rawPublishers
-          .filter(row => row['Environmental data? Y/N/Part'] === 'Y')
-          .map(row => ({ id: row.ID, name: row.Name }));
-
-        this.getResults();
-      });
-  }
-
   handleKeywordChange(e) {
     // udpate state (used for validation and handling)
     const { search } = this.state;
@@ -474,7 +408,7 @@ export class ExplorerController extends React.Component {
   }
 
   loadLicense() {
-    fetch('https://raw.githubusercontent.com/CSIRO-enviro-informatics/licences-register/master/licences.json')
+    return fetch('https://raw.githubusercontent.com/CSIRO-enviro-informatics/licences-register/master/licences.json')
       .then(res => res.json())
       .then((json) => {
         // console.log(json)
@@ -610,12 +544,12 @@ export class ExplorerController extends React.Component {
           </Col>
           <Col lg="9" md="12">
             <div className="selected">
-              <h4>Datasets Selected: { this.props.selectedDistributions.size }</h4>
+              <h4>Datasets Selected: {this.props.selectedDistributions.size}</h4>
               <Link to="/snippets" params={{ selectedDistributions: this.state.selectedDistributions }} className="btn btn-primary float-right">View Snippets </Link>
               <ul className="selected-datasets">
                 {
                   [...this.props.selectedDistributions.values()].map(dist => (
-                    <li key={dist.identifier}><a className="selected-dataset"> { dist.title } <FontAwesomeIcon onClick={() => this.deleteDistFromSelection(dist.identifier)} icon={faTimes} /></a></li>
+                    <li key={dist.identifier}><a className="selected-dataset"> {dist.title} <FontAwesomeIcon onClick={() => this.deleteDistFromSelection(dist.identifier)} icon={faTimes} /></a></li>
                   ))
                 }
               </ul>
