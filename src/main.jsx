@@ -10,7 +10,7 @@ import {
   ConnectedRouter, routerReducer, routerMiddleware, LOCATION_CHANGE,
 } from 'react-router-redux';
 import { createMiddleware } from 'redux-beacon';
-import GoogleAnalytics, { trackPageView, trackEvent } from '@redux-beacon/google-analytics';
+import GoogleAnalytics, { trackPageView } from '@redux-beacon/google-analytics';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import createSagaMiddleware from 'redux-saga';
 import reducers from './reducers';
@@ -86,7 +86,9 @@ const initGA = (config) => {
 loadConfig('/config.json')
   .then((config) => {
     initAuth(config.keycloak, store);
-    initGA(config.googleAnalytics);
+    if (config.googleAnalytics.tracking_id) {
+      initGA(config.googleAnalytics);
+    }
   })
   .then(() => load());
 // load();

@@ -127,7 +127,14 @@ export class SnippetsController extends React.Component {
         <hr />
         <Row className="snippets-body">
           <Col xs="12">
-            { distributionMap.size === 0 ? renderNoSnippets() : renderSnippets(distributionMap.valueSeq(), this.state.collapsedDataset, this.toggleCollapseDistribution.bind(this)) }
+            { distributionMap.size === 0
+              ? renderNoSnippets()
+              : renderSnippets(
+                distributionMap.valueSeq(),
+                this.state.collapsedDataset,
+                this.toggleCollapseDistribution.bind(this),
+              )
+            }
           </Col>
         </Row>
       </div>

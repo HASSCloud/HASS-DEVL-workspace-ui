@@ -270,7 +270,7 @@ export class ExplorerController extends React.Component {
   }
 
   componentDidMount() {
-    console.log('Explorer: work in progress.');
+    console.warn('Explorer: work in progress.');
     this.loadPublishers();
     this.loadLicense();
   }

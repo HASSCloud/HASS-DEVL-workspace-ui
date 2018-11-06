@@ -74,7 +74,9 @@ const ToolsController = () => {
                         <img className="card-logo" src={CoesraLogo} alt="COESRA Logo" /><a href="https://portal.coesra.org.au/strudel-web/" target="_blank" rel="noopener noreferrer">Virtual Desktop</a>
                       </CardTitle>
                       <CardText>
-                      This Virtual Desktop environment provides a CentOS Linux based virtual desktop environment with tools like QGIS, Kepler Scientific Workflow, KNIME, Panoply, OpenRefine and Biodiverse.
+                      This Virtual Desktop environment provides a CentOS Linux based
+                      virtual desktop environment with tools like QGIS, Kepler Scientific Workflow,
+                      KNIME, Panoply, OpenRefine and Biodiverse.
                       </CardText>
                     </Col>
                     <Col>
