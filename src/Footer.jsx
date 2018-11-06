@@ -7,8 +7,7 @@ export default class Footer extends React.Component {
       <footer id="footer">
         <Container>
           <Row>
-            <Col md="12">
-            </Col>
+            <Col md="12" />
           </Row>
         </Container>
       </footer>
