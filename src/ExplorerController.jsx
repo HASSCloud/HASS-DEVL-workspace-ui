@@ -556,14 +556,14 @@ export class ExplorerController extends React.Component {
             </div>
             <BlockUi tag="div" blocking={this.state.resultsLoading} loader={<Loader active type="ball-pulse" />}>
               <div className="results-list">
-                { this.state.hits > 0 && (
+                {this.state.hits > 0 && (
                   <header>
                     <div className="pagination">
-                      <span className="pages">Page {this.state.page} / { Math.ceil(this.state.hits / this.state.perpage) }</span>
-                      { this.renderPageButtons() }
+                      <span className="pages">Page {this.state.page} / {Math.ceil(this.state.hits / this.state.perpage)}</span>
+                      {this.renderPageButtons()}
                     </div>
                   </header>
-                ) }
+                )}
 
                 <ResultsList
                   data={this.state.results}
@@ -573,14 +573,14 @@ export class ExplorerController extends React.Component {
                   selectedDistributions={this.props.selectedDistributions}
                 />
 
-                { this.state.hits > 0 && (
+                {this.state.hits > 0 && (
                   <footer>
                     <div className="pagination">
-                      <span className="pages">Page {this.state.page} / { Math.ceil(this.state.hits / this.state.perpage) }</span>
-                      { this.renderPageButtons() }
+                      <span className="pages">Page {this.state.page} / {Math.ceil(this.state.hits / this.state.perpage)}</span>
+                      {this.renderPageButtons()}
                     </div>
                   </footer>
-                ) }
+                )}
               </div>
             </BlockUi>
           </Col>
