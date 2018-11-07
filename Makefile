@@ -14,7 +14,7 @@
 
 .PHONY:	build push test
 
-PREFIX = hub.bccvl.org.au/ecocloud
+PREFIX = hub.bccvl.org.au/tinker
 IMAGE = workspace-ui
 TAG = 0.5.1
 
