@@ -142,8 +142,16 @@ class App extends React.Component {
             <Route key="Snippets" path="/snippets" component={SnippetsController} />,
           ]) : (
             <Container>
-              <h1>You are not signed in</h1>
-              <p>Please <NavLink to="/login" onClick={this.onLogin}>sign in</NavLink> to continue.</p>
+              <h1>Welcome to Tinker Studio</h1>
+              <p>
+                As part of the Tinker environment, Tinker Studio is an online platform that
+                provides researchers with advanced tools such as Jupyter notebooks for Python code,
+                R Studio, and direct access to repositories of research data.
+              </p>
+              <p>
+                For more information about Tinker and the range of tools, please visit
+                our <a href="https://tinker.edu.au/">home page</a> or <a href="https://tinker.edu.au/faq/">FAQs</a> for more information.
+              </p>
             </Container>
           )}
         </section>
