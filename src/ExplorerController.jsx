@@ -15,6 +15,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { SearchFacet, ResultsList } from './explorer';
 import { getUser, getAuthenticated, getSelectedDistributions } from './reducers';
 import * as snippetActions from './snippets/actions';
+import { getConfig } from './config';
 
 function mapStateToProps(state) {
   return {
@@ -147,6 +148,13 @@ function facetDefaultSortFunc(a, b) {
   return a.name.localeCompare(b.name);
 }
 
+/**
+ * @returns {string} Elasticsearch query URL for Explorer dataset search
+ */
+function getEsServerUrl() {
+  return getConfig('explorer').esServerUrl;
+}
+
 export class ExplorerController extends React.Component {
   static propTypes = {
     selectedDistributions: PropTypes.instanceOf(Map),
@@ -229,7 +237,7 @@ export class ExplorerController extends React.Component {
   getResults() {
     const query = this.generateQueryObject();
 
-    axios.post('https://staging.knowledgenet.co/api/v0/es-query/datasets', query)
+    axios.post(getEsServerUrl(), query)
       .then((res) => {
         this.setState((prevState) => {
           // reset the value to 0
