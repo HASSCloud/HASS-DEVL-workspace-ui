@@ -16,7 +16,7 @@
 
 PREFIX = hub.bccvl.org.au/tinker
 IMAGE = workspace-ui
-TAG = 0.5.1-3
+TAG = 0.5.1-4
 
 # prod commands
 
