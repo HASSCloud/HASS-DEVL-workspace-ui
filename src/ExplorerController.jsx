@@ -320,8 +320,8 @@ export class ExplorerController extends React.Component {
     }
 
     if (selectedPublishers.size === 0) {
-      // Don't filter by publisher name keyword
-      query.query.bool.must[0] = {};
+      // Delete the object at index 0 out of the `bool.must` array
+      query.query.bool.must.splice(0, 1);
     } else {
       query.query.bool.must[0] = {
         terms: {
