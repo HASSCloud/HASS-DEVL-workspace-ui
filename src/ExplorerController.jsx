@@ -17,6 +17,46 @@ import { getUser, getAuthenticated, getSelectedDistributions } from './reducers'
 import * as snippetActions from './snippets/actions';
 import { getConfig } from './config';
 
+// https://lowrey.me/parsing-a-csv-file-in-es6-javascript/
+class Csv {
+  static parseLine(text) {
+    const regex = /(?!\s*$)\s*(?:'([^'\\]*(?:\\[\S\s][^'\\]*)*)'|"([^"\\]*(?:\\[\S\s][^"\\]*)*)"|([^,'"\s\\]*(?:\s+[^,'"\s\\]+)*))\s*(?:,|$)/g;
+    const arr = [];
+    text.replace(regex, (m0, m1, m2, m3) => {
+      if (m1 !== undefined) {
+        arr.push(m1.replace(/\\'/g, "'"));
+      } else if (m2 !== undefined) {
+        arr.push(m2.replace(/\\"/g, '"'));
+      } else if (m3 !== undefined) {
+        arr.push(m3);
+      }
+      return '';
+    });
+    if (/,\s*$/.test(text)) {
+      arr.push('');
+    }
+    return arr;
+  }
+
+  static zipObject(props, values) {
+    return props.reduce((prev, prop, i) => {
+      prev[prop] = values[i]; // eslint-disable-line no-param-reassign
+      return prev;
+    }, {});
+  }
+
+  static parse(csv) {
+    const [properties, ...data] = csv.split('\n').map(Csv.parseLine);
+    return data.map(line => this.zipObject(properties, line));
+  }
+
+  static serialize(obj) {
+    const fields = Object.keys(obj[0]);
+    const csv = obj.map(row => fields.map(fieldName => JSON.stringify(row[fieldName] || '')));
+    return [fields, ...csv].join('\n');
+  }
+}
+
 function mapStateToProps(state) {
   return {
     user: getUser(state),
@@ -272,8 +312,8 @@ export class ExplorerController extends React.Component {
   /**
    * Adds a given distribution to the selection set for snippets
    */
-  addDistToSelection = (dataset) => {
-    this.props.dispatch(snippetActions.selectionAddDistribution(dataset));
+  addDistToSelection = (distribution) => {
+    this.props.dispatch(snippetActions.selectionAddDistribution(distribution));
   }
 
   /**
@@ -376,13 +416,17 @@ export class ExplorerController extends React.Component {
       }
 
       // Update state and trigger fetch once done
+      //
+      // Note that we should reset the page counter back so that we don't end up
+      // with changes in the facets causing users to be stranded on a page that
+      // is beyond the actual number of available pages
       switch (type) {
         case 'format':
-          this.setState({ selectedFormats: selectionSet }, () => this.getResults());
+          this.setState({ selectedFormats: selectionSet, page: 1 }, () => this.getResults());
           break;
 
         case 'publisher':
-          this.setState({ selectedPublishers: selectionSet }, () => this.getResults());
+          this.setState({ selectedPublishers: selectionSet, page: 1 }, () => this.getResults());
           break;
 
         default:
@@ -452,6 +496,7 @@ export class ExplorerController extends React.Component {
     this.setState({ page }, () => this.getResults());
   }
 
+  // TODO: to avoid arrow functions in onClick we have to make the pager buttons their own component
   renderPageButtons() {
     const { page, hits, perpage } = this.state;
     const last = Math.ceil(hits / perpage);
@@ -565,15 +610,12 @@ export class ExplorerController extends React.Component {
             </div>
             <BlockUi tag="div" blocking={this.state.resultsLoading} loader={<Loader active type="ball-pulse" />}>
               <div className="results-list">
-                {this.state.hits > 0 && (
-                  <header>
-                    <div className="pagination">
-                      <span className="pages">Page {this.state.page} / {Math.ceil(this.state.hits / this.state.perpage)}</span>
-                      {this.renderPageButtons()}
-                    </div>
-                  </header>
-                )}
-
+                <header>
+                  <div className="pagination">
+                    <span className="pages">Page {this.state.page} / {Math.ceil(this.state.hits / this.state.perpage)}</span>
+                    {this.renderPageButtons()}
+                  </div>
+                </header>
                 <ResultsList
                   data={this.state.results}
                   license={this.state.license}
@@ -582,14 +624,12 @@ export class ExplorerController extends React.Component {
                   selectedDistributions={this.props.selectedDistributions}
                 />
 
-                {this.state.hits > 0 && (
-                  <footer>
-                    <div className="pagination">
-                      <span className="pages">Page {this.state.page} / {Math.ceil(this.state.hits / this.state.perpage)}</span>
-                      {this.renderPageButtons()}
-                    </div>
-                  </footer>
-                )}
+                <footer>
+                  <div className="pagination">
+                    <span className="pages">Page {this.state.page} / {Math.ceil(this.state.hits / this.state.perpage)}</span>
+                    {this.renderPageButtons()}
+                  </div>
+                </footer>
               </div>
             </BlockUi>
           </Col>

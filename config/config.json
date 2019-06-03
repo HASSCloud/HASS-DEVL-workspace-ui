@@ -5,6 +5,9 @@
   "jupyterhub": {
     "url": "http://localhost:8010"
   },
+  "tokens": {
+    "url": "http://localhost:6544"
+  },
   "keycloak": {
     "url": "http://localhost:8080/auth",
     "realm": "local",
@@ -15,6 +18,6 @@
     "tracking_id": null
   },
   "explorer": {
-    "esServerUrl": "https://knowledgenet.co/api/v0/es-query/datasets"
+    "esServerUrl": "https://v2-1.knowledgenet.co/api/v0/es-query/datasets"
   }
 }

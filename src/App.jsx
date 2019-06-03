@@ -51,10 +51,16 @@ class App extends React.Component {
     this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   }
 
+  closeNavBar = () => {
+    if (this.state.isOpen === true) {
+      this.toggle();
+    }
+  }
+
   render() {
     const { isAuthenticated, user } = this.props;
 
-    const anonLinks = (
+    const anonLinks = () => (
       <Nav className="ml-auto" navbar>
         <NavItem>
           <NavLink to="/login" onClick={this.onLogin}>Sign in <i className="fa fa-user-circle" /></NavLink>
@@ -65,13 +71,13 @@ class App extends React.Component {
     const userLinks = () => (
       <Nav className="ml-auto" navbar>
         <NavItem active>
-          <NavLink exact to="/">Dashboard</NavLink>
+          <NavLink exact to="/" onClick={this.closeNavBar}>Dashboard</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink exact to="/workspace">Workspace</NavLink>
+          <NavLink exact to="/workspace" onClick={this.closeNavBar}>Workspace</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink exact to="/explorer">Explorer</NavLink>
+          <NavLink exact to="/explorer" onClick={this.closeNavBar}>Explorer</NavLink>
         </NavItem>
         <UncontrolledDropdown nav inNavbar>
           <DropdownToggle nav>
@@ -115,7 +121,7 @@ class App extends React.Component {
         </NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
-          { isAuthenticated ? userLinks() : anonLinks }
+          { isAuthenticated ? userLinks() : anonLinks() }
         </Collapse>
       </Navbar>
     );

@@ -7,8 +7,8 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons/faSpinner';
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { faEraser } from '@fortawesome/free-solid-svg-icons/faEraser';
-import { faServer } from '@fortawesome/free-solid-svg-icons/faServer';
 import * as actions from './actions';
+import LaunchServer from './LaunchServer';
 import { jupyterhub } from '../api';
 import { formatDate, formatTime } from '../utils';
 
@@ -17,7 +17,7 @@ import { formatDate, formatTime } from '../utils';
  *
  * @param {object} server Server status object
  */
-function renderStatusCell(server) {
+const StatusCell = ({ server }) => {
   // Termination is indicated by the value of the pending property
   if (server.pending === 'stop') {
     return (
@@ -42,18 +42,52 @@ function renderStatusCell(server) {
   return (
     <td><FontAwesomeIcon icon={faTimes} /> Terminating</td>
   );
-}
+};
+
+StatusCell.propTypes = {
+  server: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 /**
  * Renders a nicer human readable value for the start date in a table cell
  *
  * @param {string} date Start date value as a string
  */
-function renderStartDateCell(date) {
-  return (
-    <td>{`${formatDate(date)} ${formatTime(date)}`}</td>
-  );
-}
+const StartDateCell = ({ date }) => (<td>{`${formatDate(date)} ${formatTime(date)}`}</td>);
+StartDateCell.propTypes = {
+  date: PropTypes.string.isRequired,
+};
+
+
+const ServerRow = ({ server, huburl, terminateServer }) => (
+  <tr key={server.name}>
+    <td><a href={`${huburl}${server.url}`} target="_blank" rel="noopener noreferrer">{server.name || 'Server'}</a></td>
+    <StartDateCell date={server.started} />
+    <StatusCell server={server} />
+    <td className="right-align">
+      {
+        // Only render buttons if not in the process of spinning up or down
+        !server.pending && [
+          <a key="0" className="btn btn-primary btn-sm" href={`${huburl}${server.url}`} target="_blank" rel="noopener noreferrer">Open</a>,
+          ' ',
+          <button
+            key="1"
+            className="btn btn-danger btn-sm"
+            type="button"
+            onClick={terminateServer}
+          >Terminate
+          </button>,
+        ]
+      }
+    </td>
+  </tr>
+);
+ServerRow.propTypes = {
+  server: PropTypes.objectOf(PropTypes.any).isRequired,
+  huburl: PropTypes.string.isRequired,
+  terminateServer: PropTypes.func.isRequired,
+};
+
 
 class ComputeTableBasic extends React.Component {
   static propTypes = {
@@ -67,51 +101,15 @@ class ComputeTableBasic extends React.Component {
    *
    * @param {object} username User's username
    */
-  terminateServer(username) {
-    this.props.dispatch(actions.serverTerminate(username));
-  }
-
-  renderServers() {
-    const huburl = jupyterhub.getHubUrl();
-    const { username, servers } = this.props;
-
-    // If there are no servers, suggest to launch a notebook server
-    if (servers.length === 0) {
-      return (
-        <tr>
-          <td colSpan="4" className="text-center"><a className="btn btn-secondary btn-sm" href={`${huburl}/hub/home`} target="_blank" title="Launch notebook server" rel="noopener noreferrer"><FontAwesomeIcon icon={faServer} /> Launch notebook server</a></td>
-        </tr>
-      );
-    }
-
-    return servers
-      .map(server => (
-        <tr key={server.name}>
-          <td><a href={`${huburl}${server.url}`} target="_blank" rel="noopener noreferrer">{server.name || 'Server'}</a></td>
-          { renderStartDateCell(server.started) }
-          { renderStatusCell(server) }
-          <td className="right-align">
-            {
-              // Only render buttons if not in the process of spinning up or down
-              !server.pending && (
-                <>
-                  <a className="btn btn-tertiary btn-sm" href={`${huburl}${server.url}`} target="_blank" rel="noopener noreferrer">Open</a>
-                  {' '}
-                  <button
-                    className="btn btn-danger btn-sm"
-                    type="button"
-                    onClick={(e) => { this.terminateServer(username); e.preventDefault(); }}
-                  >Terminate
-                  </button>
-                </>
-              )
-            }
-          </td>
-        </tr>
-      ));
+  terminateServer = () => {
+    const { username, dispatch } = this.props;
+    dispatch(actions.serverTerminate(username));
   }
 
   render() {
+    const huburl = jupyterhub.getHubUrl();
+    const { username, servers } = this.props;
+
     return (
       <div>
         <Table className="green-table">
@@ -124,7 +122,15 @@ class ComputeTableBasic extends React.Component {
             </tr>
           </thead>
           <tbody>
-            { this.renderServers() }
+            { servers.length === 0 && <LaunchServer huburl={huburl} username={username} />}
+            { servers.length >= 0 && servers.map(server => (
+              <ServerRow
+                key={server.name}
+                server={server}
+                huburl={huburl}
+                terminateServer={this.terminateServer}
+              />))
+            }
           </tbody>
         </Table>
       </div>

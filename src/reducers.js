@@ -1,4 +1,5 @@
 import * as actions from './actions';
+import dashboardReducer, * as dashboard from './dashboard/reducers';
 import projectsReducer, * as projects from './projects/reducers';
 import computeReducer, * as compute from './compute/reducers';
 import snippetsReducer, * as snippets from './snippets/reducers';
@@ -28,6 +29,7 @@ function userReducer(state = { idTokenParsed: {}, authenticated: false }, action
 
 const rootReducers = {
   auth: userReducer,
+  dashboard: dashboardReducer,
   projects: projectsReducer,
   compute: computeReducer,
   snippets: snippetsReducer,
@@ -36,6 +38,8 @@ const rootReducers = {
 export default rootReducers;
 
 // redefine selectors to match our mapping in rootReducer
+export const getFeed = state => dashboard.getFeed(state.dashboard);
+
 export const getStats = state => projects.getStats(state.projects);
 
 export const getContents = state => projects.getContents(state.projects);
@@ -46,6 +50,12 @@ export const getUser = state => state.auth && state.auth.idTokenParsed;
 
 export const getAuthenticated = state => state.auth && state.auth.authenticated;
 
+export const getProfiles = state => compute.getProfiles(state.compute);
+
+export const getFlavours = state => compute.getFlavours(state.compute);
+
 export const getServers = state => compute.getServers(state.compute);
+
+export const getAuthorizations = state => compute.getAuthorizations(state.compute);
 
 export const getSelectedDistributions = state => snippets.getSelectedDistributions(state.snippets);
