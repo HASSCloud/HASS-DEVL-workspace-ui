@@ -18,44 +18,6 @@ import * as snippetActions from './snippets/actions';
 import { getConfig } from './config';
 
 // https://lowrey.me/parsing-a-csv-file-in-es6-javascript/
-class Csv {
-  static parseLine(text) {
-    const regex = /(?!\s*$)\s*(?:'([^'\\]*(?:\\[\S\s][^'\\]*)*)'|"([^"\\]*(?:\\[\S\s][^"\\]*)*)"|([^,'"\s\\]*(?:\s+[^,'"\s\\]+)*))\s*(?:,|$)/g;
-    const arr = [];
-    text.replace(regex, (m0, m1, m2, m3) => {
-      if (m1 !== undefined) {
-        arr.push(m1.replace(/\\'/g, "'"));
-      } else if (m2 !== undefined) {
-        arr.push(m2.replace(/\\"/g, '"'));
-      } else if (m3 !== undefined) {
-        arr.push(m3);
-      }
-      return '';
-    });
-    if (/,\s*$/.test(text)) {
-      arr.push('');
-    }
-    return arr;
-  }
-
-  static zipObject(props, values) {
-    return props.reduce((prev, prop, i) => {
-      prev[prop] = values[i]; // eslint-disable-line no-param-reassign
-      return prev;
-    }, {});
-  }
-
-  static parse(csv) {
-    const [properties, ...data] = csv.split('\n').map(Csv.parseLine);
-    return data.map(line => this.zipObject(properties, line));
-  }
-
-  static serialize(obj) {
-    const fields = Object.keys(obj[0]);
-    const csv = obj.map(row => fields.map(fieldName => JSON.stringify(row[fieldName] || '')));
-    return [fields, ...csv].join('\n');
-  }
-}
 
 function mapStateToProps(state) {
   return {
