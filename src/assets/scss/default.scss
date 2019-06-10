@@ -91,13 +91,13 @@ label {
     }
 
     &.btn-tertiary {
-	background-color: $tertiary-color;
-	border-color: $tertiary-color;
-	color: #fff;
+        background-color: $tertiary-color;
+        border-color: $tertiary-color;
+        color: #fff;
 
-	&:hover {
-		background-color: darken( $tertiary-color, 10% );
-	}
+        &:hover {
+            background-color: darken( $tertiary-color, 10% );
+        }
     }
 
     &.btn-danger {
@@ -199,32 +199,42 @@ hr {
 header#header {
     background:#FFF;
 
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    
+    box-shadow: 0 1px 10px -6px rgba(0,0,0,0.42),0 1px 10px 0 rgba(0,0,0,0.12),0 4px 5px -2px rgba(0,0,0,0.1);
+    text-transform: uppercase;
+
+    font-size: 0.75rem;
+
     .navbar {
-        align-items:initial;
-        height:100px;
-        padding-left:0;
-        padding-right:0;
+        align-items: stretch;
+        height: 70px;
+        padding: 12px 0;
+
         button.navbar-toggler {
-            margin-top: 1rem;
-            height: 3rem;
+            margin: 0;
+            padding: 0;
         }
         .navbar-toggler-icon {
-            position:relative;
-            height:1.5rem;
+            height: 0;
+            line-height: 0;
         }
         .navbar-toggler-icon:before {
-            content: "\f0c9";  /* this is your text. You can also use UTF-8 character codes as I do here */
-            font-family: FontAwesome;
-            color:$primary-color;
+            content: "\f0c9";
+            font-family: Font Awesome\ 5 Free;
+            color: $primary-color;
+            font-weight: 900;
         }
         .show.navbar-collapse {
             background: white;
             width: 100%;
-            margin: 0px -2.4rem;
-            padding: 1rem 2rem;
+            margin: 0px -2.4em;
+            padding: 1em 2em;
             z-index: 100;
-            font-size: 1rem;
-            line-height: 2rem;
+            font-size: 1em;
+            line-height: 2em;
 
             .nav-item {
                 margin-bottom:.35rem;
@@ -240,34 +250,46 @@ header#header {
         }
 
         .navbar-brand {
-            width: 192px;
+            width: 223px;
             height: 42px;
             padding-top:0;
-            margin-top: 1.3rem;
             img {
                 vertical-align: top;
+                width: 100%;
             }
         }
-         a {
+        a {
             color:$body-color;
 
             &:hover, &.active {
                 color:$primary-color;
+                text-decoration: none;
             }
         }
+        
+        .dropdown-menu {
+            font-size: 1em;
+            padding-top: 0.5em;
+            padding-bottom: 0.5em;
+        }
+
         .nav-item {
             a {
-                padding:0rem .75rem;
+                padding: 0em 1.3em;
+                font-size: 1em;
             }
             .dropdown-item {
                 text-align: right;
                 padding: 0.25rem 1rem;
+                font-size: 1em;
+                font-weight: inherit;
 
                 &:active{
                     a {
                         color:white;
                     }
-                    background:$primary-color;
+
+                    background: $tertiary-color;
                 }
             }
         }
@@ -298,10 +320,15 @@ section#main {
         margin-bottom:2rem;
         padding: 0.5rem 1rem 1rem;
         table {
-            thead th {
-                border-top:0px solid white;
-            }
             margin-bottom:0.5rem;
+            
+            thead th {
+                border-top: 0;
+            }
+
+            td {
+                vertical-align: middle;
+            }
         }
         button {
             margin-right:.5rem;
@@ -423,13 +450,20 @@ section#main {
                 border:1px solid $secondary-color;
             }
         }
+
+        .search-body {
+            background: $grey-box-bg;
+            padding-bottom: 15px;
+            margin-bottom: -2rem;
+        }
+
         .search-body.row, .search-header.row {
             margin-left:0;
             margin-right:0;
         }
         .search-header.row {
 
-            background:lighten($dull-header, 15%);
+            background:lighten($dull-header, 10%);
             padding:.5rem;
             margin-top:-2rem;
 
@@ -494,7 +528,6 @@ section#main {
                 }
             }
             a {
-                color:darken($primary-color, 25%);
                 font-size:0.8rem;
             }
             button {
@@ -520,6 +553,7 @@ section#main {
                 color:white;
                 padding:.75rem 1rem;
                 font-size:1rem;
+                font-weight: bolder;
             }
             .add-keywords-form {
                 padding-bottom:1rem;
@@ -584,7 +618,7 @@ section#main {
 
             .pagination {
                 font-size:0.875rem;
-                color:lighten($body-color, 50%);
+                color:lighten($body-color, 30%);
                 display: block;
                 padding: 1rem;
                 border-radius:0px;
@@ -632,7 +666,7 @@ section#main {
             .result {
                 margin:2rem 1rem;
                 padding-bottom:2rem;
-                border-bottom:1px solid lighten($body-color, 70%);
+                border-bottom: 1px solid lighten($grey-box-border, 10%);
 
                 .source {
                     color:lighten($body-color, 50%);
@@ -649,7 +683,7 @@ section#main {
                 }
 
                 &:last-child {
-                    border-bottom:0px solid lighten($body-color, 70%);
+                    border-bottom: 0;
                 }
 
                 dl.dates {
@@ -657,7 +691,7 @@ section#main {
                     dd, dt {
                         display:inline-block;
                         font-size:0.9rem;
-                        background:lighten($body-color, 75%);
+                        background:lighten($body-color, 65%);
                         padding:.3rem;
                     }
                     dt {
@@ -710,6 +744,11 @@ section#main {
                         }
                     }
                 }
+            }
+
+            header + .results,
+            .results + footer {
+                border-top: 1px solid lighten($grey-box-border, 10%);
             }
         }
 
@@ -843,7 +882,7 @@ section#main {
 }
 footer#footer {
     color:white;
-	padding:2.5rem 0;
+    padding:2.5rem 0;
 
     h3 {
         font-size:16px;
@@ -853,13 +892,22 @@ footer#footer {
     }
     ul {
         list-style-type: none;
-        padding-left:0;
-        padding-right:1em;
-        margin-bottom: 1.5rem;
+        padding: 0;
+        margin: 0 -15px;
     }
     li {
         line-height: 1.2em;
-        margin-bottom: .6em;
+        display: inline-block;
+
+        a {
+            color: #fff;
+            opacity: 0.86;
+            font-size: 0.75rem;
+            font-weight: bolder;
+            display: inline-block;
+            padding: 15px;
+            text-transform: uppercase;
+        }
     }
 }
 
